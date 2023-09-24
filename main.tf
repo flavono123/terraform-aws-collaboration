@@ -1,12 +1,11 @@
 terraform {
-  // cloud {
-  //   organization = "<MY_ORG_NAME>"         # 생성한 ORG 이름 지정
-  //   hostname     = "app.terraform.io"      # default
+  cloud {
+    organization = "flavonoyeelleesam"
 
-  //   workspaces {
-  //     name = "collaboration"  # 없으면 생성됨
-  //   }
-  // }
+    workspaces {
+      name = "terraform-edu-part1-assessment"
+    }
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -19,7 +18,7 @@ provider "aws" {
   region = var.region
   default_tags {
     tags = {
-      Project = "<project name>"
+      Project = "workshop"
     }
   }
 }
