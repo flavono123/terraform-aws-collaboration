@@ -120,16 +120,6 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-resource "aws_eip" "hashicat" {
-  instance = aws_instance.hashicat.id
-  vpc      = true
-}
-
-resource "aws_eip_association" "hashicat" {
-  instance_id   = aws_instance.hashicat.id
-  allocation_id = aws_eip.hashicat.id
-}
-
 resource "aws_instance" "hashicat" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
@@ -144,7 +134,7 @@ resource "aws_instance" "hashicat" {
 }
 
 resource "null_resource" "configure-cat-app" {
-  depends_on = [aws_eip_association.hashicat]
+  depends_on = [aws_instance.hashicat]
 
   // triggers = {
   //   build_number = timestamp()
@@ -158,7 +148,7 @@ resource "null_resource" "configure-cat-app" {
       type        = "ssh"
       user        = "ubuntu"
       private_key = tls_private_key.hashicat.private_key_pem
-      host        = aws_eip.hashicat.public_ip
+      host        = aws_instance.hashicat.public_ip
     }
   }
 
@@ -180,7 +170,7 @@ resource "null_resource" "configure-cat-app" {
       type        = "ssh"
       user        = "ubuntu"
       private_key = tls_private_key.hashicat.private_key_pem
-      host        = aws_eip.hashicat.public_ip
+      host        = aws_instance.hashicat.public_ip
     }
   }
 }
