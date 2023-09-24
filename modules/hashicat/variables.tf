@@ -2,21 +2,6 @@ variable "prefix" {
   description = "This prefix will be included in the name of most resources."
 }
 
-variable "region" {
-  description = "The region where the resources are created."
-  default     = "ap-northeast-2"
-}
-
-variable "address_space" {
-  description = "The address space that is used by the virtual network. You can supply more than one address space. Changing this forces a new resource to be created."
-  default     = "10.0.0.0/16"
-}
-
-variable "subnet_prefix" {
-  description = "The address prefix to use for the subnet."
-  default     = "10.0.10.0/24"
-}
-
 variable "instance_type" {
   description = "Specifies the AWS instance type."
   default     = "t3.micro"
@@ -32,11 +17,26 @@ variable "width" {
   description = "Image width in pixels."
 }
 
-variable "placeholders" {
-  default = [
-    "placekitten.com",
-    "placebear.com",
-    "placedog.net"
-  ]
+variable "placeholder" {
+  type        = string
   description = "Image-as-a-service URL. Some other fun ones to try are fillmurray.com, placecage.com, placebeard.it, loremflickr.com, baconmockup.com, placeimg.com, placebear.com, placeskull.com, stevensegallery.com, placedog.net"
+}
+
+# Network
+variable "subnet_id" {
+  description = "id of the subnet"
+}
+
+variable "vpc_segurity_group_id" {
+  description = "id of the security group"
+}
+
+# SSH
+variable "key_name" {
+  description = "Name of the SSH keypair to use in AWS"
+}
+
+
+variable "private_key" {
+  description = "SSH private key"
 }

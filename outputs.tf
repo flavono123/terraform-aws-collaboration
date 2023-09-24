@@ -1,7 +1,13 @@
 output "catapp_url" {
-  value = "http://${aws_instance.hashicat.public_dns}"
+  value = [
+    for hashicat in module.hashicats :
+    hashicat.catapp_url
+  ]
 }
 
 output "catapp_ip" {
-  value = "http://${aws_instance.hashicat.public_ip}"
+  value = [
+    for instance in module.hashicats :
+    instance.catapp_ip
+  ]
 }
